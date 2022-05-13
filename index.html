@@ -19,12 +19,19 @@
 
     <!-- scripts -->
     <script>
-        const link = document.querySelector('link[rel=import]');
-        const container = document.querySelector("container");
+        const container = document.querySelector(".container");
+        
+        const h1 = document.querySelector("h1");
+        let clone = h1.cloneNode(true)
+        const h2 = document.createElement("h2");
+        h2.innerText =  "This is H2";
+        
+        const header = document.querySelector('link[rel=import]');
+        let cloneHeader = header.cloneNode(true)
 
-        // let content = link.import.querySelector('#header');
-
-        container.appendChild(link.cloneNode(true));
+        container.append(header.cloneNode(true));
+        container.append(clone);
+        container.append(h2)
     </script>
 </body>
 
