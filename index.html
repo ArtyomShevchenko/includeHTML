@@ -6,32 +6,84 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index HTML - general file!!!</title>
-    <link rel="import" href="header.html">
+    <link rel="import" href="./header.html">
     <link rel="import" href="./main.html">
     <link rel="import" href="./footer.html">
     <style>
+        * {
+            font-family: monospace;
+        }
+
+        .post {
+            border: 2px solid black;
+            border-radius: 5px;
+            margin-top: 30px;
+            padding: 10px;
+            background-color: rgb(253, 236, 231);
+        }
+
+        .post img {
+            max-height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Index HTML file</h1>
-    <div class="container"></div>
+
+    <div class="include_container">include_container</div>
+
+    <div class="container">
+        <h1>Index HTML file</h1>
+        <div class="content"></div>
+    </div>
+
+    <template>
+        <section class="post">
+            <h2></h2>
+            <img src="" alt="image">
+            <p></p>
+            <a href="">Більше...</a>
+        </section>
+    </template>
 
     <!-- scripts -->
     <script>
-        const container = document.querySelector(".container");
-        
-        const h1 = document.querySelector("h1");
-        let clone = h1.cloneNode(true)
-        const h2 = document.createElement("h2");
-        h2.innerText =  "This is H2";
-        
-        const header = document.querySelector('link[rel=import]');
-        let cloneHeader = header.cloneNode(true)
 
-        container.append(header.cloneNode(true));
-        container.append(clone);
-        container.append(h2)
+        const includeContainer = document.querySelector("include_container");
+        
+
+        // post container
+        const container = document.querySelector(".container");
+        const template = document.querySelector("template");
+        let cloneSection = template.content.cloneNode(true).querySelector("section");
+
+        function post(title, image, text, link) {
+            // clone
+            cloneSection = template.content.cloneNode(true).querySelector("section");
+            // title
+            cloneSection.children[0].textContent = title
+            // image
+            cloneSection.children[1].attributes.src.value = image;
+            // text
+            cloneSection.children[2].textContent = text;
+            // link
+            if (link === "") {
+                cloneSection.children[3].style.display = "none";
+            } else {
+                cloneSection.children[3].attributes.href.nodeValue = link;
+            }
+            // append in .container
+            container.append(cloneSection);
+        }
+
+        // post
+        post("title", "./1.jpg", "text", "")
+        post("Kiev", "./kiev.jpg", "Киев – столица Украины, расположенная на реке Днепр. Город известен памятниками религиозной архитектуры и историческими музеями. Киево-Печерская лавра XI века – это монастырь и центр паломничества. На его территории возвышаются несколько церквей, увенчанных золотыми куполами. Этот архитектурный комплекс знаменит своими подземными ходами, ведущими в усыпальницы православных монахов, и коллекцией золотых предметов скифских времен", "https://ru.wikipedia.org/wiki/%D0%9A%D0%B8%D0%B5%D0%B2");
+        post("Lviv", "./lviv.jpg", "Львов – город на западе Украины, примерно в 70 километрах от границы с Польшей. Архитектура города хранит следы польского и австро-венгерского наследия и сочетает стили Восточной и Центральной Европы, а именно Италии и Германии. В парке Высокого замка на вершине горы сохранились руины крепости XIV века. Отсюда открывается панорамный вид на зеленые купола церквей и окружающие город холмы.", "");
+        post("Herson", "./herson.jpg", "Херсо́н — город на юге Украины, административный, промышленный и культурный центр Херсонской области и Херсонского района. Временное месторасположение представительства Президента Украины в АР Крым. Расположен на правом берегу Днепра, вблизи его впадения в Днепровский лиман Чёрного моря.", "https://ru.wikipedia.org/wiki/%D0%A5%D0%B5%D1%80%D1%81%D0%BE%D0%BD")
     </script>
 </body>
 
